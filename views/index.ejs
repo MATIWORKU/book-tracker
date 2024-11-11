@@ -1,0 +1,40 @@
+<%- include('partials/header.ejs') %>
+
+<body>
+    <div class="container-box">
+        <% if(locals.books){ %>
+            <% books.forEach(book => { %>
+                <div class="px-4 py-5 my-5">
+                    <img class="d-block mb-4 cover" src= "https://covers.openlibrary.org/b/<%= book.key %>/<%= book.cover_i %>-M.jpg" alt="<%= book.title %>" width="250px" height="300px">
+                    <h2 class="display-5 fw-bold"><%= book.title %>- By <%= book.author_name %></h2>
+                    <small class="mb-3">Date read: <%= book.date %>. How strongly I recommend it: <strong><%= book.rating %></strong>/10</small>
+                    <div>
+                    <p class="lead mb-4">
+                        <%= book.summary %>
+                    </p>
+                    </div>
+                    <div class="d-grid gap-2 d-sm-flex justify-content-sm-end px-4 mx-5">
+                        <form action="/edit" method="post">
+                            <input type="text" name="title" value="<%= book.title %>" hidden>
+                            <input type="text" name="author_name" value="<%= book.author_name %>" hidden>
+                            <input type="text" name="date_read" value="<%= book.date %>" hidden>
+                            <input type="text" name="summary" value="<%= book.summary %>" hidden>
+                            <input type="text" name="rating" value="<%= book.rating %>" hidden>
+                            
+                            <button type="submit" class="btn-lg px-4 gap-3">Edit</button>
+                        </form>
+                        <form action="/delete" method="post">
+                            <input type="text" name="title" value="<%= book.title %>" hidden>
+                            <input type="text" name="author_name" value="<%= book.author_name %>" hidden>
+                            
+                            <button type="submit" class="btn-lg px-4">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            <% }) %>
+        <% } %>
+    </div>
+</body>
+</html>
+
+<%- include('partials/footer.ejs') %>   

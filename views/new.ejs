@@ -1,0 +1,29 @@
+<%- include('partials/header.ejs') %>
+
+<body>
+    <div class="container">
+        <% if(locals.book){ %>
+            <form id="book-form" action="/edit/book" method="post">
+                <input type="text" name="title" value="<%= book.title %>" placeholder="Book Title">
+                <input type="text" name="author_name" value="<%= book.author_name %>" placeholder="Book Title">
+                <input type="date" name="date_read" value="<%= book.date_read %>">
+                <textarea name="summary"><%= book.summary %></textarea>
+                <input type="number" name="rating" value="<%= book.rating %>" min="1" max="10" required>
+                <button type="submit">Edit Book</button>
+            </form>
+        <% }else { %>
+            <form id="book-form" action="/add" method="post">
+                <input type="text" name="title" value="<%= title %>" placeholder="Book Title">
+                <input type="text" name="author_name" value="<%= author_name %>" placeholder="Book Title">
+                <input type="text" name="cover_i" value="<%= cover_i %>" hidden>
+                <input type="date" name="date_read">
+                <textarea name="summary" placeholder="Your Notes"></textarea>
+                <input type="number" name="rating" placeholder="Rating (1-10)" min="1" max="10" required>
+                <button type="submit">Add Book</button>
+            </form>
+        <% } %>
+    </div>
+</body>
+</html>
+
+<%- include('partials/footer.ejs') %>

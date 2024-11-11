@@ -1,0 +1,54 @@
+<%- include('partials/header.ejs') %>
+
+<body>
+    <div class="container-box">
+        <% if(books.length !== 0){ %>
+            <% books.forEach(book => { %>
+                <div class="px-4 py-5 my-5 box">
+                    <img class="d-block mb-4 cover" src= "https://covers.openlibrary.org/b/<%= book.key %>/<%= book.cover_i %>-M.jpg" alt="<%= book.title %>" width="250px" height="300px">
+                    <h2 class="display-5 fw-bold"><%= book.title %>- By     <%= book.author_name[0] %></h2>
+                    <div class="btn my-5">
+                        <div class="p-5 text-center rounded-3">
+                            <form action="/new" method="post">
+                                <input type="text" name="title" value="<%= book.title %>" hidden>
+                                <input type="text" name="author_name" value="<%= book.author_name[0] %>" hidden>
+                                <input type="text" name="cover_i" value="<%= book.cover_i %>" hidden>
+                                <button type="submit">Add Book</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            <% }) %>
+            <div class="my-5 py-5">
+                <div class="d-grid gap-2 d-sm-flex justify-content-sm-center px-4 pt-3 mx-4 mt-3">
+                    <form class="col-6 col-lg-auto mb-3 mb-lg-0 me-lg-3 navigate" role="search" action="/search" method="post">
+                        <div class="col-6 px-5 mx-5">
+                            <% if(start > 0){ %>
+                                <button type="submit" class="btn-lg px-4 gap-3" name="offset" value="<%= offset - 10 %>">Previous</button>
+                            <% } %>
+                        </div>
+                        <div class="col-6 px-5 mx-5">
+                          <% if(numFound > start + 10){ %>
+                            <button type="submit" class="btn-lg px-4 gap-3" name="offset" value="<%= offset + 10 %>">Next</button>
+                          <% } %>
+                        </div>
+                        <input type="search" class="form-control form-control-dark" name="title" value="<%= query %>" hidden>
+                    </form>
+                </div>
+            </div>
+        <% }else {%>
+            <div class="container-box my-5">
+                <div class="p-5 text-center rounded-3">
+                  <h2 class="text-body-emphasis">No Books Found!!!</h2>
+                  <p class="lead">
+                    There doesn't seem to be a book with the title you specified. Try Again.
+                  </p>
+                  <button><a style="text-decoration: none;" href="/">Return To Home.</a></button>
+                </div>
+              </div>
+        <% } %>
+    </div>
+</body>
+</html>
+
+<%- include('partials/footer.ejs') %> 
